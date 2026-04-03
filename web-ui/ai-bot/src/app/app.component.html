@@ -1,0 +1,24 @@
+<div class="app-container">
+  <h2>{{ title }}</h2>
+
+  <div class="chat-window">
+    <div *ngFor="let m of messages" class="message" [ngClass]="m.role">
+      <div class="label">{{ m.role === 'user' ? 'You' : 'Agent' }}</div>
+      <div class="content">{{ m.content }}</div>
+    </div>
+    <div *ngIf="loading" class="message assistant">
+      <div class="label">Agent</div>
+      <div class="content">Thinking...</div>
+    </div>
+  </div>
+
+  <div class="input-row">
+    <textarea
+      [(ngModel)]="input"
+      (keydown)="onKeydown($event)"
+      placeholder="Ask the agent something..."
+      rows="2"
+    ></textarea>
+    <button (click)="send()" [disabled]="loading || !input.trim()">Send</button>
+  </div>
+</div>

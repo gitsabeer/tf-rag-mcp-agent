@@ -5,6 +5,7 @@ import uvicorn
 app = FastAPI()
 
 model = tf.keras.models.load_model("sentiment_model.h5")
+print("Model loaded!")
 
 @app.post("/sentiment")
 def sentiment(data: dict):

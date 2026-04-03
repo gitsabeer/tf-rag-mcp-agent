@@ -1,3 +1,20 @@
+
+# Full file explanation block (line-by-line):
+# 1. import json: handles JSON serialization/deserialization for tool argument passing and results.
+# 2. import requests: used to send HTTP requests to local tool servers at localhost:9000.
+# 3. from openai import OpenAI: OpenAI SDK client class used to call the chat model.
+# 4. from rag.rag_tf import rag_query: RAG retrieval + generation helper imported from the rag module.
+
+# 5. client = OpenAI(): instantiate OpenAI client once, reused for each agent call.
+
+# 6. tool_rag(query): wrapper function that calls rag_query(query) and returns its result.
+# 7. tool_sentiment(text): wrapper that posts {'text': text} to sentiment endpoint and returns JSON response.
+# 8. tool_add(a, b): wrapper that posts {'a': a, 'b': b} to add endpoint and returns JSON response.
+# 9. TOOLS: list of tool specs for OpenAI function-calling with names, descriptions, and parameter schemas.
+
+# 10. call_tool(name, args): routes the requested function name to the corresponding wrapper and arguments.
+# 11. agent(goal): constructs messages, calls OpenAI with tools enabled, handles tool_calls, and returns final model content when done.
+# 12. if __name__ == "__main__": example usage running agent with a compound task.
 import json
 import requests
 from openai import OpenAI
@@ -57,6 +74,11 @@ def agent(goal):
         {"role": "user", "content": goal}
     ]
 
+    # The agent loop continues until the model returns a result without tool calls.
+    # 1. Send all messages to OpenAI chat completion with tools enabled.
+    # 2. If response has no tool_calls, return text output (final answer).
+    # 3. If tool_calls are present, execute each tool and append its result as a tool message.
+    # 4. Repeat: model can then reason further with tool outputs in context.
     while True:
         resp = client.chat.completions.create(
             model="gpt-4o-mini",

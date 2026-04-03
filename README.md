@@ -36,7 +36,7 @@ This is a production‑ready architecture for intelligent agents that can:
 ## 📦 Installation
 
 ```bash
-git clone https://github.com/yourname/tf-rag-mcp-agent.git
+git clone https://github.com/gitsabeer/tf-rag-mcp-agent.git
 cd tf-rag-mcp-agent
 python -m venv .venv
 source .venv/bin/activate

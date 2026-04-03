@@ -1,0 +1,9 @@
+tensorflow>=2.15
+tensorflow-hub>=0.16.1
+numpy
+chromadb
+openai>=1.6.0
+python-dotenv
+fastapi
+uvicorn
+requests
